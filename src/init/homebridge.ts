@@ -7,7 +7,14 @@ type AccessoryConstructor = any;
 type PlatformConstructor = {new (log: Logger, config: any, homebridge: HomebridgeAPI): Platform};
 
 interface Platform {
-    accessories(callback: (accessories: Accessory[]) => void): void;
+    accessories(callback: (accessories: {
+        // Used by Homebridge
+        name: string;
+        getServices: () => Service[];
+
+        // Used by the test server
+        accessory: Accessory;
+    }[]) => void): void;
 }
 
 interface HomebridgeAPI {
@@ -44,7 +51,11 @@ class AirPortPlatform implements Platform {
         this.platform = new AirPort(config, homebridge.hap);
     }
 
-    accessories(callback: (accessories: Accessory[]) => void) {
+    accessories(callback: (accessories: {
+        name: string;
+        getServices: () => Service[];
+        accessory: Accessory,
+    }[]) => void) {
         this.platform.getAccessories().then(accessories => {
             const {Service, Characteristic} = this.platform.hap;
 
@@ -59,8 +70,13 @@ class AirPortPlatform implements Platform {
                 accessory_information.setCharacteristic(Characteristic.FirmwareRevision, accessory.firmware_revision!);
 
                 for (const service of accessory.services) platformAccessory.addService(service);
+                const services = [accessory_information, ...accessory.services];
 
-                return platformAccessory;
+                return {
+                    name: accessory.name!,
+                    getServices: () => services,
+                    accessory: platformAccessory,
+                };
             }));
         });
     }

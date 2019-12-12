@@ -46,7 +46,9 @@ Object.setPrototypeOf(log, console);
 type AccessoryConstructor = any;
 type PlatformConstructor = {new (_log: typeof log, config: any, homebridge: typeof homebridge_api): Platform};
 interface Platform {
-    accessories(callback: (accessories: Accessory[]) => void): void;
+    accessories(callback: (accessories: {
+        accessory: Accessory;
+    }[]) => void): void;
 }
 
 const platform_types: Record<string, PlatformConstructor> = {};
@@ -80,7 +82,7 @@ if (!platform_types[config.platform]) {
 
 (async () => {
     const platform_instance = new platform_types[config.platform](log, config, homebridge_api);
-    const accessories = await new Promise<Accessory[]>(rs => platform_instance.accessories(rs));
+    const accessories = await new Promise<{accessory: Accessory;}[]>(rs => platform_instance.accessories(rs));
 
     const bridge_uuid = uuid.generate('hap-nodejs:bridge');
     const bridge = new Bridge(config.name, bridge_uuid);
@@ -91,7 +93,7 @@ if (!platform_types[config.platform]) {
         stringify: (data: string) => JSON.stringify(data, undefined, 4) + '\n',
     });
 
-    for (const accessory of accessories) {
+    for (const {accessory} of accessories) {
         bridge.addBridgedAccessory(accessory);
     }
 

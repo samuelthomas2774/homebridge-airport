@@ -37,6 +37,7 @@ export default class AirPort {
 
         for (const [identifier, client] of Object.entries(this.clients)) {
             if (this.accessories.find(a => a instanceof BaseStationAccessory && a.basestation === client)) continue;
+            if ('accessory' in client.config && !client.config.accessory) continue;
             this.accessories.push(new BaseStationAccessory(this, client, identifier));
         }
 

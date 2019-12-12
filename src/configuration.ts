@@ -10,6 +10,7 @@ export interface DeviceConfiguration {
     port?: number;
     password: string;
     encryption?: boolean;
+    accessory?: boolean;
 }
 
 export const DEFAULT_ACP_PORT = 5009;

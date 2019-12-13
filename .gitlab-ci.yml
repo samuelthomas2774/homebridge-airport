@@ -40,6 +40,10 @@ publish-npm:
 publish-github:
     stage: deploy
     script:
+        # Update the package.json and package-lock.json
+        - "node -e \"fs.writeFileSync('package.json', JSON.stringify((json => {json.name = '@samuelthomas2774/homebridge-airport'; json.publishConfig = {access: 'public'}; return json;})(JSON.parse(fs.readFileSync('package.json', 'utf-8'))), null, 4) + '\\n', 'utf-8')\""
+        - "node -e \"fs.writeFileSync('package-lock.json', JSON.stringify((json => {json.name = '@samuelthomas2774/homebridge-airport'; return json;})(JSON.parse(fs.readFileSync('package-lock.json', 'utf-8'))), null, 4) + '\\n', 'utf-8')\""
+
         - echo "//npm.pkg.github.com/:_authToken=${GITHUB_NPM_TOKEN}" > .npmrc
         - npm --color="always" --registry=https://npm.pkg.github.com/ publish
     dependencies:

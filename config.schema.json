@@ -1,0 +1,265 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"version": "0.1.0",
+	"title": "homebridge-airport AirPort Homebridge platform configuration",
+    "type": "object",
+    "properties": {
+        "platform": {
+            "type": "string",
+            "enum": [
+                "AirPort",
+                "airport.AirPort"
+            ]
+        },
+        "name": {
+            "type": "string",
+            "description": "The name of the platform.",
+            "default": "AirPort"
+        },
+        "devices": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "$ref": "#/definitions/device-configuration"
+                }
+            }
+        },
+        "accessories": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/accessory-configuration"
+            }
+        }
+    },
+    "required": [
+        "platform"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "device-configuration": {
+            "type": "object",
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "The hostname or IP address of the AirPort base station.",
+                    "default": "airport-base-station.local"
+                },
+                "port": {
+                    "type": "number",
+                    "description": "The port of the AirPort base station's ACP server.",
+                    "default": 5009
+                },
+                "password": {
+                    "type": "string",
+                    "description": "The admin password of the AirPort base station."
+                },
+                "encryption": {
+                    "type": "boolean",
+                    "description": "Use an encrypted connection to the AirPort base station.",
+                    "default": true
+                },
+                "accessory": {
+                    "type": "boolean",
+                    "description": "Create a base-station accessory for this AirPort base station.",
+                    "default": true
+                }
+            },
+            "required": [
+                "host",
+                "password"
+            ],
+            "additionalProperties": false
+        },
+        "accessory-configuration": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "The type of accessory to create."
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/accessory-configuration/definitions/base-station"
+                },
+                {
+                    "$ref": "#/definitions/accessory-configuration/definitions/connected-clients"
+                }
+            ],
+            "definitions": {
+                "base-station": {
+                    "properties": {
+                        "type": {
+                            "enum": [
+                                "base-station"
+                            ]
+                        },
+                        "id": {
+                            "type": "string",
+                            "description": "The name of the AirPort device. Must exist in the devices object."
+                        },
+                        "connected-clients": {
+                            "type": "array",
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/accessory-configuration/definitions/connected-clients/definitions/configuration"
+                                    },
+                                    {
+                                        "properties": {
+                                            "stations": {
+                                                "description": "The Wi-Fi interfaces to use in this occupancy sensor.",
+                                                "oneOf": [
+                                                    {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "all",
+                                                            "main",
+                                                            "guest"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "description": "The name of the Wi-Fi interface on the AirPort base station, or \"main\" or \"guest\".",
+                                                            "oneOf": [
+                                                                {
+                                                                    "enum": [
+                                                                        "main",
+                                                                        "guest"
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "pattern": "^wlan[0-9]+$"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "connected-clients": {
+                    "description": "An occupancy sensor that detects Wi-Fi clients.",
+                    "properties": {
+                        "type": {
+                            "enum": [
+                                "connected-clients"
+                            ]
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "The name to use for the accessory."
+                        },
+                        "stations": {
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "all"
+                                    ]
+                                },
+                                {
+                                    "type": "array"
+                                }
+                            ]
+                        },
+                        "clients": {},
+                        "exclude-clients": {}
+                    },
+                    "additionalProperties": false,
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/accessory-configuration/definitions/connected-clients/definitions/configuration"
+                        }
+                    ],
+                    "definitions": {
+                        "configuration": {
+                            "properties": {
+                                "stations": {
+                                    "description": "The AirPort base stations to use in this sensor.",
+                                    "oneOf": [
+                                        {
+                                            "type": "string",
+                                            "enum": [
+                                                "all",
+                                                "main",
+                                                "guest"
+                                            ]
+                                        },
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "oneOf": [
+                                                    {
+                                                        "type": "string",
+                                                        "description": "The name of the AirPort device. Must exist in the devices object."
+                                                    },
+                                                    {
+                                                        "type": "array",
+                                                        "items": [
+                                                            {
+                                                                "type": "string",
+                                                                "description": "The name of the AirPort device. Must exist in the devices object."
+                                                            },
+                                                            {
+                                                                "type": "string",
+                                                                "description": "The name of the Wi-Fi interface on the AirPort base station, or \"main\" or \"guest\".",
+                                                                "oneOf": [
+                                                                    {
+                                                                        "enum": [
+                                                                            "main",
+                                                                            "guest"
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "pattern": "^wlan[0-9]+$"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                "clients": {
+                                    "type": "array",
+                                    "description": "MAC addresses of clients to detect.",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "The MAC address of a client to detect.",
+                                        "pattern": "^([0-9a-f]{2}:){5}[0-9a-f]{2}$"
+                                    }
+                                },
+                                "exclude-clients": {
+                                    "type": "array",
+                                    "description": "MAC addresses of clients to ignore.",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "The MAC address of a client to ignore.",
+                                        "pattern": "^([0-9a-f]{2}:){5}[0-9a-f]{2}$"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "stations"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

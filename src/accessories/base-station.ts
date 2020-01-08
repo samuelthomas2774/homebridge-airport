@@ -1,7 +1,7 @@
 import Accessory from './accessory';
 import AirPortBaseStation, {ClientStatus} from '../airport';
 import AirPort from '../platform';
-import {Types} from '../custom-hap';
+import {CustomHapTypes} from '../custom-hap';
 import {BaseStationConfiguration, ConnectedClientsConfiguration} from '../configuration';
 import {Property} from 'node-acp';
 import {CharacteristicEventTypes} from 'hap-nodejs';
@@ -73,7 +73,7 @@ export default class BaseStationAccessory extends Accessory {
         return accessory;
     }
 
-    readonly wifi_satellite_service: Types['WiFiSatellite'] = (() => {
+    readonly wifi_satellite_service: CustomHapTypes.WiFiSatellite = (() => {
         const service = new this.platform.custom.WiFiSatellite('Wi-Fi Network');
 
         service.getCharacteristic(this.platform.custom.WiFiSatelliteStatus)!

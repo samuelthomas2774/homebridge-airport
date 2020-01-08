@@ -1,4 +1,4 @@
-export default function({Service, Characteristic, Formats, Perms}: typeof import('hap-nodejs')) {
+export default function({Service, Characteristic, Formats, Perms}: typeof import('hap-nodejs')): typeof CustomHapTypes {
     /**
      * Characteristic "Wi-Fi Satellite Status"
      */
@@ -9,7 +9,7 @@ export default function({Service, Characteristic, Formats, Perms}: typeof import
         static readonly CONNECTED = 1;
         static readonly NOT_CONNECTED = 2;
     
-        static readonly UUID: string = '0000021E-0000-1000-8000-0026BB765291';
+        static readonly UUID = '0000021E-0000-1000-8000-0026BB765291';
     
         constructor() {
             super('Wi-Fi Satellite Status', WiFiSatelliteStatus.UUID);
@@ -29,7 +29,7 @@ export default function({Service, Characteristic, Formats, Perms}: typeof import
      */
 
     class WiFiSatellite extends Service {
-        static readonly UUID: string = '0000020F-0000-1000-8000-0026BB765291';
+        static readonly UUID = '0000020F-0000-1000-8000-0026BB765291';
     
         constructor(displayName?: string, subtype?: string) {
             super(displayName!, WiFiSatellite.UUID, subtype!);
@@ -44,7 +44,7 @@ export default function({Service, Characteristic, Formats, Perms}: typeof import
      */
 
     class WiFiClientList extends Characteristic {
-        static readonly UUID: string = '6535A829-0813-4155-A0CD-760E93430203';
+        static readonly UUID = '6535A829-0813-4155-A0CD-760E93430203';
     
         constructor() {
             super('Wi-Fi Client List', WiFiClientList.UUID);
@@ -62,7 +62,7 @@ export default function({Service, Characteristic, Formats, Perms}: typeof import
      */
 
     class FullWiFiClientList extends Characteristic {
-        static readonly UUID: string = '6535A82A-0813-4155-A0CD-760E93430203';
+        static readonly UUID = '6535A82A-0813-4155-A0CD-760E93430203';
     
         constructor() {
             super('Full Wi-Fi Client List', FullWiFiClientList.UUID);
@@ -80,7 +80,7 @@ export default function({Service, Characteristic, Formats, Perms}: typeof import
      */
 
     class WiFiClients extends Service {
-        static readonly UUID: string = '6535A828-0813-4155-A0CD-760E93430203';
+        static readonly UUID = '6535A828-0813-4155-A0CD-760E93430203';
     
         constructor(displayName?: string, subtype?: string) {
             super(displayName!, WiFiClients.UUID, subtype!);
@@ -100,70 +100,59 @@ export default function({Service, Characteristic, Formats, Perms}: typeof import
         WiFiClientList,
         FullWiFiClientList,
         WiFiClients,
-    } as any;
+    };
 }
 
-// @ts-ignore
-return;
+declare namespace CustomHapTypes {
+    const Service: typeof import('hap-nodejs').Service;
+    const Characteristic: typeof import('hap-nodejs').Characteristic;
+    type Service = import('hap-nodejs').Service;
+    type Characteristic = import('hap-nodejs').Characteristic;
 
-import {Service, Characteristic} from 'hap-nodejs';
+    export {};
 
-declare class WiFiSatelliteStatus extends Characteristic {
-    // The value property of WiFiSatelliteStatus must be one of the following:
-    static readonly UNKNOWN = 0;
-    static readonly CONNECTED = 1;
-    static readonly NOT_CONNECTED = 2;
+    export class WiFiSatelliteStatus extends Characteristic {
+        // The value property of WiFiSatelliteStatus must be one of the following:
+        static readonly UNKNOWN = 0;
+        static readonly CONNECTED = 1;
+        static readonly NOT_CONNECTED = 2;
 
-    static readonly UUID = '0000021E-0000-1000-8000-0026BB765291';
+        static readonly UUID = '0000021E-0000-1000-8000-0026BB765291';
 
-    constructor();
+        constructor();
+    }
+
+    export class WiFiSatellite extends Service {
+        static readonly UUID = '0000020F-0000-1000-8000-0026BB765291';
+
+        constructor(displayName?: string, subtype?: string);
+    }
+
+    export class WiFiClientList extends Characteristic {
+        static readonly UUID = '6535A829-0813-4155-A0CD-760E93430203';
+
+        constructor();
+    }
+
+    /**
+     * Characteristic "Full Wi-Fi Client List"
+     */
+
+    export class FullWiFiClientList extends Characteristic {
+        static readonly UUID = '6535A82A-0813-4155-A0CD-760E93430203';
+
+        constructor();
+    }
+
+    /**
+     * Service "Wi-Fi Clients"
+     */
+
+    export class WiFiClients extends Service {
+        static readonly UUID = '6535A828-0813-4155-A0CD-760E93430203';
+
+        constructor(displayName?: string, subtype?: string);
+    }
 }
 
-declare class WiFiSatellite extends Service {
-    static readonly UUID = '0000020F-0000-1000-8000-0026BB765291';
-
-    constructor(displayName?: string, subtype?: string);
-}
-
-declare class WiFiClientList extends Characteristic {
-    static readonly UUID = '6535A829-0813-4155-A0CD-760E93430203';
-
-    constructor();
-}
-
-/**
- * Characteristic "Full Wi-Fi Client List"
- */
-
-declare class FullWiFiClientList extends Characteristic {
-    static readonly UUID = '6535A82A-0813-4155-A0CD-760E93430203';
-
-    constructor();
-}
-
-/**
- * Service "Wi-Fi Clients"
- */
-
-declare class WiFiClients extends Service {
-    static readonly UUID = '6535A828-0813-4155-A0CD-760E93430203';
-
-    constructor(displayName?: string, subtype?: string);
-}
-
-export type Namespaces = {
-    WiFiSatelliteStatus: typeof WiFiSatelliteStatus;
-    WiFiSatellite: typeof WiFiSatellite;
-
-    WiFiClientList: typeof WiFiClientList;
-    FullWiFiClientList: typeof FullWiFiClientList;
-    WiFiClients: typeof WiFiClients;
-};
-export type Types = {
-    WiFiSatelliteStatus: WiFiSatelliteStatus;
-    WiFiSatellite: WiFiSatellite;
-
-    WiFiClientList: WiFiClientList;
-    FullWiFiClientList: FullWiFiClientList;
-    WiFiClients: WiFiClients;
-};
+export {CustomHapTypes};

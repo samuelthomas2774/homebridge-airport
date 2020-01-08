@@ -4,7 +4,7 @@ import Accessory, {BaseStationAccessory, types} from './accessories';
 
 export default class AirPort {
     readonly hap: typeof import('hap-nodejs');
-    readonly custom: import('./custom-hap').Namespaces;
+    readonly custom: typeof import('./custom-hap').CustomHapTypes;
 
     readonly config: Readonly<Configuration>;
     readonly clients: Record<DeviceIdentifier, AirPortBaseStation> = {};

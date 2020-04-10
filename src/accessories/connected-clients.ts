@@ -4,6 +4,7 @@ import AirPort from '../platform';
 import {ConnectedClientsConfiguration, MACAddress} from '../configuration';
 import {Property, PropertyValueTypes} from 'node-acp';
 import {callbackifyGetHandler, readableJoin} from '../util';
+import {CharacteristicEventTypes} from 'hap-nodejs';
 
 export default class ConnectedClientsAccessory extends Accessory {
     readonly basestations: [AirPortBaseStation, string | null][];
@@ -68,19 +69,19 @@ export default class ConnectedClientsAccessory extends Accessory {
         const service = new this.platform.hap.Service.OccupancySensor('Wi-Fi clients');
 
         service.getCharacteristic(this.platform.custom.WiFiClientList)!
-            .on('get', this._handleGetClientList.bind(this, false))
-            .on('subscribe', this._handleSubscribeClientList.bind(this, false))
-            .on('unsubscribe', this._handleUnsubscribeClientList.bind(this, false));
+            .on('get' as CharacteristicEventTypes, this._handleGetClientList.bind(this, false))
+            .on('subscribe' as CharacteristicEventTypes, this._handleSubscribeClientList.bind(this, false))
+            .on('unsubscribe' as CharacteristicEventTypes, this._handleUnsubscribeClientList.bind(this, false));
 
         service.getCharacteristic(this.platform.custom.FullWiFiClientList)!
-            .on('get', this._handleGetClientList.bind(this, true))
-            .on('subscribe', this._handleSubscribeClientList.bind(this, true))
-            .on('unsubscribe', this._handleUnsubscribeClientList.bind(this, true));
+            .on('get' as CharacteristicEventTypes, this._handleGetClientList.bind(this, true))
+            .on('subscribe' as CharacteristicEventTypes, this._handleSubscribeClientList.bind(this, true))
+            .on('unsubscribe' as CharacteristicEventTypes, this._handleUnsubscribeClientList.bind(this, true));
 
         service.getCharacteristic(this.platform.hap.Characteristic.OccupancyDetected)!
-            .on('get', this._handleGetOccupancyDetected.bind(this))
-            .on('subscribe', this._handleSubscribeOccupancyDetected.bind(this))
-            .on('unsubscribe', this._handleUnsubscribeOccupancyDetected.bind(this));
+            .on('get' as CharacteristicEventTypes, this._handleGetOccupancyDetected.bind(this))
+            .on('subscribe' as CharacteristicEventTypes, this._handleSubscribeOccupancyDetected.bind(this))
+            .on('unsubscribe' as CharacteristicEventTypes, this._handleUnsubscribeOccupancyDetected.bind(this));
 
         return service;
     })();
@@ -100,7 +101,7 @@ export default class ConnectedClientsAccessory extends Accessory {
             const clients = (all ? await this.getAllConnectedClients() : await this.getConnectedClients()).sort();
             const c = this.occupancy_sensor_service.getCharacteristic(all ?
                 this.platform.custom.FullWiFiClientList : this.platform.custom.WiFiClientList)!;
-            if (JSON.stringify({clients}) !== JSON.stringify(c.value)) c.updateValue({clients});
+            if (JSON.stringify({clients}) !== JSON.stringify(c.value)) c.updateValue({clients} as any);
         }, 1000);
     }
 

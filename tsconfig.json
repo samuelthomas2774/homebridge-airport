@@ -6,7 +6,6 @@
         "strict": true,
         "declaration": true,
         "sourceMap": true,
-        "downlevelIteration": true,
         "experimentalDecorators": true,
         "rootDir": "src",
         "outDir": "dist"

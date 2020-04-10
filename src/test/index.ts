@@ -1,10 +1,9 @@
-import path from 'path';
-import fs from 'fs';
-// @ts-ignore
-import storage from 'node-persist';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as storage from 'node-persist';
 import * as hap from 'hap-nodejs';
 import {Bridge, Accessory, Service, Characteristic, uuid} from 'hap-nodejs';
-import yaml from 'yaml';
+import * as yaml from 'yaml';
 
 import homebridge_plugin from '..';
 
@@ -90,6 +89,7 @@ if (!platform_types[config.platform]) {
 
     storage.initSync({
         dir: path.resolve(__dirname, '..', '..', 'persist'),
+        // @ts-ignore
         stringify: (data: string) => JSON.stringify(data, undefined, 4) + '\n',
     });
 

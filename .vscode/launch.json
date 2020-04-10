@@ -33,9 +33,9 @@
             "args": [
                 "-D",
                 "-P",
-                ".",
+                "${workspaceFolder}",
                 "-U",
-                "data"
+                "${workspaceFolder}/data"
             ],
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"

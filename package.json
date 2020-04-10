@@ -1,16 +1,20 @@
 {
     "name": "homebridge-airport",
     "version": "0.1.0",
+    "license": "MIT",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://gitlab.fancy.org.uk/samuel/homebridge-airport.git"
+    },
     "keywords": [
         "homebridge-plugin",
         "hap-server-plugin"
     ],
     "engines": {
-        "node": "^8.0.0",
-        "homebridge": "*",
-        "@hap-server/hap-server": "*"
+        "node": ">=12",
+        "homebridge": "^0.4.53"
     },
     "files": [
         "dist"

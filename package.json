@@ -16,14 +16,14 @@
         "dist"
     ],
     "dependencies": {
-        "node-acp": "^0.5.0"
+        "node-acp": "^0.7.0"
     },
     "devDependencies": {
-        "@types/node": "^12.12.11",
+        "@types/node": "^12.12.35",
         "@types/yaml": "^1.2.0",
-        "hap-nodejs": "^0.5.3",
-        "homebridge": "^0.4.50",
-        "typescript": "^3.7.2",
-        "yaml": "^1.7.2"
+        "hap-nodejs": "^0.5.12-beta.2",
+        "homebridge": "^0.4.54-beta.23",
+        "typescript": "^3.8.3",
+        "yaml": "^1.8.3"
     }
 }

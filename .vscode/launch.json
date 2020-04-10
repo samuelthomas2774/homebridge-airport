@@ -18,6 +18,28 @@
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Homebridge",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/node_modules/.bin/homebridge",
+            "env": {
+                "DEBUG": "*"
+            },
+            "args": [
+                "-D",
+                "-P",
+                ".",
+                "-U",
+                "data"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ]
         }
     ]
 }

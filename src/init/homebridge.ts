@@ -1,6 +1,6 @@
 import AirPort from '../platform';
 import {Configuration} from '../configuration';
-import {Accessory, Service, Characteristic} from 'hap-nodejs';
+import {Accessory, Service} from 'hap-nodejs';
 
 type Logger = typeof console & typeof console.log;
 type AccessoryConstructor = any;
@@ -54,7 +54,7 @@ class AirPortPlatform implements Platform {
     accessories(callback: (accessories: {
         name: string;
         getServices: () => Service[];
-        accessory: Accessory,
+        accessory: Accessory;
     }[]) => void) {
         this.platform.getAccessories().then(accessories => {
             const {Service, Characteristic} = this.platform.hap;

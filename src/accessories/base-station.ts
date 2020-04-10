@@ -25,6 +25,7 @@ export default class BaseStationAccessory extends Accessory {
         this.name = identifier;
 
         this.basestation.setStatus(ClientStatus.READY);
+        this.basestation.auto_reconnect = true;
         this.basestation.connect().then(async () => {
             const [name, model, serial, version, wifi] =
                 await this.basestation.client!.getProperties(['syNm', 'syAM', 'sySN', 'syVs', 'WiFi']) as [

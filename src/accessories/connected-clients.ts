@@ -33,6 +33,7 @@ export default class ConnectedClientsAccessory extends Accessory {
 
         for (const [basestation] of this.basestations) {
             basestation.setStatus(ClientStatus.READY);
+            basestation.auto_reconnect = true;
         }
 
         this.occupancy_sensor_service.setCharacteristic(this.platform.hap.Characteristic.Name, name);

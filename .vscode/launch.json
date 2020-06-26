@@ -28,7 +28,8 @@
             ],
             "program": "${workspaceFolder}/node_modules/.bin/homebridge",
             "env": {
-                "DEBUG": "*"
+                "DEBUG": "*",
+                "PATH": "/usr/local/bin:${env:PATH}"
             },
             "args": [
                 "-D",

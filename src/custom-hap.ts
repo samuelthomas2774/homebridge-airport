@@ -14,11 +14,11 @@ export default function({Service, Characteristic, Formats, Perms}: typeof import
         constructor() {
             super('Wi-Fi Satellite Status', WiFiSatelliteStatus.UUID);
             this.setProps({
-                format: 'uint8' as typeof Formats.UINT8,
+                format: Formats.UINT8,
                 maxValue: 2,
                 minValue: 0,
                 validValues: [0,1,2],
-                perms: ['pr' as typeof Perms.PAIRED_READ, 'ev' as typeof Perms.EVENTS],
+                perms: [Perms.PAIRED_READ, Perms.EVENTS],
             });
             this.value = this.getDefaultValue();
         }
@@ -49,9 +49,9 @@ export default function({Service, Characteristic, Formats, Perms}: typeof import
         constructor() {
             super('Wi-Fi Client List', WiFiClientList.UUID);
             this.setProps({
-                format: 'dict' as typeof Formats.DICTIONARY,
+                format: Formats.DICTIONARY,
                 maxLen: 5000,
-                perms: ['pr' as typeof Perms.PAIRED_READ, 'ev' as typeof Perms.EVENTS],
+                perms: [Perms.PAIRED_READ, Perms.EVENTS],
             });
             this.value = this.getDefaultValue();
         }
@@ -67,9 +67,9 @@ export default function({Service, Characteristic, Formats, Perms}: typeof import
         constructor() {
             super('Full Wi-Fi Client List', FullWiFiClientList.UUID);
             this.setProps({
-                format: 'dict' as typeof Formats.DICTIONARY,
+                format: Formats.DICTIONARY,
                 maxLen: 5000,
-                perms: ['pr' as typeof Perms.PAIRED_READ, 'ev' as typeof Perms.EVENTS],
+                perms: [Perms.PAIRED_READ, Perms.EVENTS],
             });
             this.value = this.getDefaultValue();
         }

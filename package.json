@@ -14,7 +14,7 @@
     ],
     "engines": {
         "node": ">=12",
-        "homebridge": "^0.4.53"
+        "homebridge": "^0.4.53 || ^1.0"
     },
     "files": [
         "dist"
@@ -23,11 +23,12 @@
         "node-acp": "^0.7.0"
     },
     "devDependencies": {
-        "@types/node": "^12.12.35",
-        "@types/yaml": "^1.2.0",
-        "hap-nodejs": "^0.5.12-beta.2",
-        "homebridge": "^0.4.54-beta.23",
-        "typescript": "^3.8.3",
-        "yaml": "^1.8.3"
+        "@types/node": "~12.0.12",
+        "@types/node-persist": "0.0.33",
+        "@types/yaml": "^1.9.7",
+        "hap-nodejs": "^0.7.5",
+        "homebridge": "^1.1.1",
+        "typescript": "^3.9.5",
+        "yaml": "^1.10.0"
     }
 }
